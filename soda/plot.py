@@ -34,6 +34,8 @@ class DataAvailabilityPlotter:
                             'EPD-STEP-RATES',
                             'EUI-FSI304-IMAGE', 'EUI-FSI174-IMAGE',
                             'EUI-HRILYA1216-IMAGE', 'EUI-HRIEUV174-IMAGE',
+                            'PHI-FDT-BLOS',
+                            'PHI-HRT-BLOS',
                             'SPICE-N-RAS',
                             'SPICE-N-EXP',
                             'SOLOHI-1FT',
@@ -103,6 +105,7 @@ class DataAvailabilityPlotter:
     @staticmethod
     def get_color(descriptor):
         return {'EUI': '#e41a1c',
+                'PHI': '#808080',
                 'MAG': '#377eb8',
                 'SWA': '#4daf4a',
                 'RPW': '#984ea3',
