@@ -50,6 +50,8 @@ jobs:
         branch: pages
         folder: . # The folder the action should deploy.
     - name: Copy file to another repository
+      env:
+        ACCESS_TOKEN: '${{ secrets.ACCESS_TOKEN }}'
       run: |
         cp index.html $HOME/index.html
         cd $HOME
