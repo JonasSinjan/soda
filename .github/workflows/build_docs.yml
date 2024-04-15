@@ -49,3 +49,25 @@ jobs:
       with:
         branch: pages
         folder: . # The folder the action should deploy.
+
+jobs:
+  push_file:
+    runs-on: ubuntu-latest
+    
+    steps:
+      uses: actions/checkout@v2
+      
+    - name: Copy file to another repository
+      run: |
+        cp index.html $HOME/index.html
+        cd $HOME
+        git config --global user.email "einsteinisbae@gmail.com"
+        git config --global user.name "JonasSinjan"
+        git config --global credential.helper cache
+        git clone https://${{secrets.ACCESS_TOKEN}}@github.com/JonasSinjan/new_website.git target_repo
+        cd target_repo/docs/projects/
+        cp $HOME/index.html .
+        mv index.html soda.md
+        git add .
+        git commit -m "push new md with html to projects"
+        git push https://${{secrets.ACCESS_TOKEN}}@github.com/JonasSinjan/new_website.git HEAD:master
