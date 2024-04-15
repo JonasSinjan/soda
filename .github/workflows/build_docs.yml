@@ -49,7 +49,7 @@ jobs:
       with:
         branch: pages
         folder: . # The folder the action should deploy.
-    - name: Copy file to another repository
+    - name: Copy file to another repository and run mkdocs to generate website
       env:
         ACCESS_TOKEN: '${{ secrets.ACCESS_TOKEN }}'
       run: |
@@ -64,4 +64,9 @@ jobs:
         mv index.html soda.md
         git add .
         git commit -m "push new md with html to projects"
-        git push https://${{secrets.ACCESS_TOKEN}}@github.com/JonasSinjan/new_website.git HEAD:master
+        git push
+        cd $HOME
+        git clone https://${{secrets.ACCESS_TOKEN}}@github.com/JonasSinjan/JonasSinjan.github.io.git githubio
+        cd githubio
+        pip install mkdocs
+        mkdocs gh-deploy --config-file target_repo/mkdocs.yml --remote-branch master
