@@ -65,8 +65,10 @@ class DataAvailabilityPlotter:
         self.add_trajectory()
 
         url = '<a href="http://soar.esac.esa.int/soar/">Solar Oribter Archive</a>'
+        gurl = '<a href="https://github.com/JonasSinjan/soda">Github Repo</a>'
         self.title = Div(
             text=(f"<h1>Solar Orbiter data availability</h1> "
+                  f"<p>Extension of project by David Stansby, available at this {gurl}</p> "
                   f"Last updated {datestr}, daily resolution, "
                   f"all data available at the {url}"))
         self.title.style = {'text-align': 'center'}
