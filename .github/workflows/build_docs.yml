@@ -49,24 +49,20 @@ jobs:
       with:
         branch: pages
         folder: . # The folder the action should deploy.
-    - name: Copy file to another repository and run mkdocs to generate website
+    - name: Copy file to website and run mkdocs
       env:
         ACCESS_TOKEN: '${{ secrets.ACCESS_TOKEN }}'
       run: |
-        cp index.html $HOME/index.html
-        cd $HOME
         git config --global user.email "einsteinisbae@gmail.com"
         git config --global user.name "JonasSinjan"
-        git config --global credential.helper cache
-        git clone https://${{secrets.ACCESS_TOKEN}}@github.com/JonasSinjan/new_website.git target_repo
-        cd target_repo/docs/projects/
-        cp $HOME/index.html .
-        mv index.html soda.md
+        git clone https://github.com/JonasSinjan/new_website.git target_repo
+        cp index.html target_repo/docs/projects/soda.md
+        cd target_repo
         git add .
         git commit -m "push new md with html to projects"
         git push
-        cd $HOME
-        git clone https://${{secrets.ACCESS_TOKEN}}@github.com/JonasSinjan/JonasSinjan.github.io.git githubio
+        cd ..
+        git clone https://github.com/JonasSinjan/JonasSinjan.github.io.git githubio
         cd githubio
         pip install mkdocs
         mkdocs gh-deploy --config-file target_repo/mkdocs.yml --remote-branch master
