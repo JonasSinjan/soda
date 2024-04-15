@@ -38,9 +38,9 @@ class DataAvailabilityPlotter:
                             'PHI-HRT-BLOS',
                             'SPICE-N-RAS',
                             'SPICE-N-EXP',
-                            'SOLOHI-1FT',
+                            'SOLOHI-1FT'
                             ][::-1]
-
+        self.all_options = [i.lower() for i in self.all_options]
         '''
         self.multi_choice = MultiChoice(
             value=self.all_options,
@@ -104,14 +104,14 @@ class DataAvailabilityPlotter:
 
     @staticmethod
     def get_color(descriptor):
-        return {'EUI': '#e41a1c',
-                'PHI': '#808080',
-                'MAG': '#377eb8',
-                'SWA': '#4daf4a',
-                'RPW': '#984ea3',
-                'EPD': '#ff7f00',
-                'SPI': '#a65628',
-                'SOL': '#dd1c77',
+        return {'eui': '#e41a1c',
+                'phi': '#808080',
+                'mag': '#377eb8',
+                'swa': '#4daf4a',
+                'rpw': '#984ea3',
+                'epd': '#ff7f00',
+                'spi': '#a65628',
+                'sol': '#dd1c77',
                 }[descriptor[:3]]
 
     @staticmethod

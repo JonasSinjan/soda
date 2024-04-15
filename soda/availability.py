@@ -4,6 +4,7 @@ import pandas as pd
 
 import requests
 from sunpy import time
+import urllib.parse
 
 _MISSION_BEGIN = time.parse_time(datetime(2020, 1, 1))
 _NOW = time.parse_time(datetime.now())
@@ -52,38 +53,29 @@ class DataProduct:
         Solar Oribter Archive for a given data descriptor.
         """
         print(f'Updating intervals for {self.descriptor}...')
-        base_url = ('http://soar.esac.esa.int/soar-sl-tap/tap/'
-                    'sync?REQUEST=doQuery&')
-        begin_time = _MISSION_BEGIN.isot.replace('T', '+')
-        end_time = _NOW.isot.replace('T', '+')
-        # Need to manually set the intervals based on a query
-        request_dict = {}
-        request_dict['LANG'] = 'ADQL'
-        request_dict['FORMAT'] = 'json'
+        src_str =  ('http://soar.esac.esa.int/soar-sl-tap/tap')
+        begin_time = _MISSION_BEGIN.isot.replace('T', '+').split('.')[0]
+        end_time = _NOW.isot.replace('T', '+').split('.')[0]
+        print(begin_time, end_time)
+        
+        extra_url_elements = "/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=JSON&QUERY="
 
-        query = {}
-        query['SELECT'] = '*'
-        if self.low_latency:
-            query['FROM'] = 'v_ll_data_item'
-        else:
-            query['FROM'] = 'v_sc_data_item'
-        query['WHERE'] = (f"descriptor='{self.descriptor}'+AND+"
-                          f"begin_time<='{end_time}'+AND+"
-                          f"begin_time>='{begin_time}'")
-        request_dict['QUERY'] = '+'.join([f'{item}+{query[item]}' for
-                                          item in query])
+        ADQL = f"SELECT+*+FROM+v_sc_data_item+WHERE+descriptor='{self.descriptor}'"
 
-        request_str = ''
-        request_str = [f'{item}={request_dict[item]}' for item in request_dict]
-        request_str = '&'.join(request_str)
+        url = src_str + extra_url_elements + ADQL#urllib.parse.quote(ADQL)
+        print(url)
 
-        url = base_url + request_str
         # Get request info
         r = requests.get(url)
         # TODO: intelligently detect and error on a bad descriptor
-
+        # with open('./test.csv', 'w+b') as file:
+        #     response = requests.get(url) # get request
+        #     file.write(response.content)
+        # df = pd.read_csv('./test.csv')
         # Do some list/dict wrangling
+        #print(r.json())
         names = [m['name'] for m in r.json()['metadata']]
+        #print(r.json())
         info = {name: [] for name in names}
         for entry in r.json()['data']:
             for i, name in enumerate(names):

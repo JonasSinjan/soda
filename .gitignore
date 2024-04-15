@@ -2,3 +2,4 @@
 soda/.data/*
 *.DS_Store
 index.html
+.vscode/launch.json
