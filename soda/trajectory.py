@@ -25,4 +25,7 @@ def get_traj():
               orbiter.z.to_value(u.AU) * earth.z.to_value(u.AU)) /
              (orbiter.r.to_value(u.AU) * earth.r.to_value(u.AU)))
     sun_earth_angle = np.rad2deg(np.arccos(adotb))
-    return times, orbiter.r.to_value(u.au), sun_earth_angle
+
+    orbiter.generate_positions(times, 'Sun', 'HCI')
+    hlat_orbiter = np.rad2deg(np.arcsin(orbiter.z.to_value(u.AU) / orbiter.r.to_value(u.AU)))
+    return times, orbiter.r.to_value(u.au), sun_earth_angle, hlat_orbiter

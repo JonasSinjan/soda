@@ -1,4 +1,4 @@
-This is an extension of the tool built by David Stansby wherein I added the PHI instrument blos data products to the overview plot.
+This is an extension of the tool built by David Stansby wherein I added the PHI instrument blos data products and the heliograpic latitude plot.
 
 Solar Orbiter Data Availability (SODA)
 ======================================

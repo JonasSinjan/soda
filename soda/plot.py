@@ -56,12 +56,20 @@ class DataAvailabilityPlotter:
                              x_range=self.plotter.x_range,
                              title='Radial distance',
                              tools=tools)
+        
         self.phi_plot = figure(sizing_mode='stretch_width', plot_height=150,
                                x_axis_type='datetime', y_range=[0, 180],
                                x_range=self.plotter.x_range,
                                title='Earth-Orbiter angle',
                                tools=tools)
         self.phi_plot.yaxis[0].ticker = FixedTicker(ticks=[0, 90, 180])
+
+        self.hlat_plot = figure(sizing_mode='stretch_width', plot_height=150,
+                               x_axis_type='datetime', y_range=[-40, 40],
+                               x_range=self.plotter.x_range,
+                               title='Orbiter Heliographic Latitude',
+                               tools=tools)
+        self.hlat_plot.yaxis[0].ticker = FixedTicker(ticks=[-40, -20, 0, 20, 40])
         self.add_trajectory()
 
         url = '<a href="http://soar.esac.esa.int/soar/">Solar Oribter Archive</a>'
@@ -73,7 +81,7 @@ class DataAvailabilityPlotter:
                   f"all data available at the {url}"))
         self.title.style = {'text-align': 'center'}
 
-        panels = [self.plotter, self.r_plot, self.phi_plot]
+        panels = [self.plotter, self.r_plot, self.phi_plot, self.hlat_plot]
         for p in panels + [self.title]:
             p.align = 'center'
         layout = gridplot(panels, ncols=1,
@@ -100,9 +108,10 @@ class DataAvailabilityPlotter:
                               color=self.get_color(descriptor))
 
     def add_trajectory(self):
-        dates, r, sun_earth_angle = get_traj()
+        dates, r, sun_earth_angle, hlat_solo = get_traj()
         self.r_plot.line(x=dates, y=r)
         self.phi_plot.line(x=dates, y=sun_earth_angle)
+        self.hlat_plot.line(x=dates, y=hlat_solo)
 
     @staticmethod
     def get_color(descriptor):
