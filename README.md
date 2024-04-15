@@ -1,9 +1,4 @@
-⚠️ This repository is now archived, and will not see any changes ⚠️
-
-I no longer have time to update this now I am a Research Software Engineer. If you would like to see this maintained, and can find funding that can be sent to a UK university (UCL), please get in touch and I might be able to maintain and improve this as part of my day job!
-
-Otherwise I'm very happy for someone to fork this and start maintaining it themselves.
-
+This is an extension of the tool built by David Stansby wherein I added the PHI instrument blos data products to the overview plot.
 
 Solar Orbiter Data Availability (SODA)
 ======================================
