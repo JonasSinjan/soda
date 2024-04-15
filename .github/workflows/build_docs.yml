@@ -49,14 +49,6 @@ jobs:
       with:
         branch: pages
         folder: . # The folder the action should deploy.
-
-jobs:
-  push_file:
-    runs-on: ubuntu-latest
-    
-    steps:
-      uses: actions/checkout@v2
-      
     - name: Copy file to another repository
       run: |
         cp index.html $HOME/index.html
